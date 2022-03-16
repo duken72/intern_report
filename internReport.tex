@@ -1,0 +1,82 @@
+% !TeX spellcheck = en_US
+\documentclass[12pt, a4paper,twoside]{report}
+\title{Internship Report}
+\author{Huu Duc Nguyen}
+\date{February 2022}
+
+\usepackage{acronym}
+\usepackage{graphicx}
+\graphicspath{{./Contents/images}}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[final]{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{blindtext}
+\usepackage{multicol}
+\usepackage{geometry}
+\geometry{a4paper, margin=0.9in}
+\makeatletter
+\usepackage[font=small]{caption}
+\usepackage{xspace}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage[backend=bibtex,style=alphabetic,]{biblatex}
+\addbibresource{Contents/bibliography.bib}
+
+%% the \onedot macro is producing only one dot at line ends.
+%% thus \etal. will not produce et al..
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+\def\eg{e.g\onedot} \def\Eg{E.g\onedot}
+\def\ie{i.e\onedot} \def\Ie{I.e\onedot}
+\def\cf{cf\onedot} \def\Cf{Cf\onedot}
+\def\etc{etc\onedot} \def\vs{vs\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\figref#1{Fig.~\ref{#1}}
+
+\def\citeaus#1{\citeauthor{#1} \cite{#1}}
+\def\citeausm#1{\citeauthor*{#1} \cite{#1}}
+
+\titleformat{\chapter}[block]%
+{\bfseries\Large\filright}%
+{\fontsize{27}{27}\selectfont\color{black}\thechapter}%
+{1em}
+{\fontsize{27}{50}\selectfont\scshape}%
+[\vspace{-2ex}]
+
+\begin{document}
+\include{Contents/Title.tex}
+
+\section*{Acknowledgments}
+I would like to thank the Robert Bosch GmbH for this opportunity, Robert Schirmer M.Sc. and Marco Lampacrescia M.Sc. for supervising and guiding me during this internship.
+\clearpage
+
+\tableofcontents
+\clearpage
+\section*{General abbreviations}
+\addcontentsline{toc}{chapter}{{General abbreviations}}
+\begin{acronym}[LONGEST]
+	\acro{BASH}{Bourne Again SHell}
+	\acro{CI}{Continuous Integration}
+	\acro{CLI}{Conmand Line Interface}
+	\acro{CPP}{Coverage Path Planning}
+	\acro{CSP}{Covering Salemans Problem}
+	\acro{EE}{End effector}
+	\acro{PID}{Process identification number}
+	\acro{POD}{Plain Old Data}
+	\acro{PP}{Path Planning}
+	\acro{ROS}{Robot Operating System}
+	\acro{TSP}{Travelling Salemans Problem}
+\end{acronym}
+
+\include{Contents/Introduction.tex}
+\include{Contents/Languages_and_tools.tex}
+\include{Contents/Experience.tex}
+\include{Contents/VacuumRobot.tex}
+\include{Contents/Conclusion.tex}
+\pagenumbering{Roman}
+\printbibliography[heading=bibintoc]
+
+\end{document}

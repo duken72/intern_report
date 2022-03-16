@@ -1,0 +1,177 @@
+% !TeX spellcheck = en_US
+\chapter{Working experience}
+
+\section{DevOps}
+\ac{CI} is a core practice in DevOps, which are the set up practices to build, test and release the code frequently. Whenever developers commit and push their code to the shared repositories, they trigger a workflow on a \ac{CI} server that automatically builds and tests the changes. In case of integration failure, the server notifies the developers.
+
+The department robotic pipeline has a well-defined structure, using various tools and platforms, \eg, Artifactory, Jenkins, Github, BitBucket, Jira, Confluence.
+
+\section{Unit Test and Integration Test}
+Writing tests is as important as writing code itself. In test-driven reverse engineering, the tests are written first, then the code are developed to pass the tests. Reviewers and users should also read the tests to understand the use of functions, classes.
+
+\section{Licenses}
+Licenses concern with how others are allowed to use a piece of code. Having no license file would imply others could neither use nor help with the code. From the corporate point of view, there are three classes of licenses:
+\begin{itemize}
+	\item \textbf{Permissive OSS licenses:} imply others could freely use the source code, while the copyright holders do not hold liability. Some common licenses of this class are: MIT License (Expat), Apache License 2.0, BSD 2-Clause License, BSD 3-Clause License. The code can be used by corporations for commercial purposes with ease.
+	\item \textbf{Strong Copyleft licenses: }require others to also open-source their code. These are turn-offs for corporations. Examples: GNU General Public License v3 (GPL-3), GNU General Public License v2.0 (GPL-2.0), Microsoft Reciprocal License (Ms-RL).
+	\item \textbf{Weak Copyleft licenses: }are in the middle of the above two. One should be careful when using code under these licenses. To be more certain, consultation with experienced lawyers is advised. Examples of these licenses are: GNU Lesser General Public License v3 (LGPL-3.0), GNU Lesser General Public License v2.1 (LGPL-2.1).
+\end{itemize}
+In practice, working with ROS2, the command \verb|ament_copyright| can help checking and add missing licenses.
+
+\begin{verbatim}
+ament_copyright -h
+ament_copyright --add-missing "<name copyright holder>" bsd_3clause --verbose .
+ament_copyright --list-licenses
+\end{verbatim}
+
+In practice, it's good to have an updated \texttt{3rd-party-licenses.txt} around. Example of \texttt{3rd-party-licenses.txt}:
+
+\begin{verbatim}
+	Shipped Third Party Components
+	======================================
+	
+	This product contains the following open source components
+	
+	
+	--------------------------------------------------------------------------
+	Overview
+	--------------------------------------------------------------------------
+	
+	package_name/include/package_name/header.h:
+	
+	Name:      another_package_name
+	Version:   2.7.5
+	URL:       https://github.com/another_package_name
+	License:   MIT
+	Copyright: Copyright (c) ...
+	Comment:   God help me
+	
+	--------------------------------------------------------------------------
+	Licenses
+	--------------------------------------------------------------------------
+	
+	a) another_package_name
+	
+	MIT License
+	
+	Copyright (c), etc.
+\end{verbatim}
+
+
+\section{Coding Style}
+As a programmer, one will have to write code for others to read, review and modify. Thus, it is crucial to write code in a well-presented manner. Coding style concerns with sets of conventions that improve code readability.
+
+\subsection{Naming conventions}
+\Eg, in C++:
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item File name: match case of class name in file
+	\item Parameters, locals: lower case with underscore, eg., \verb|variable_name|
+	\item Constants: uppercase with underscore, eg., \verb|CONSTANT_NAME|
+	\item Function name: camel case, eg., \verb|functionName|
+	\item Member variables: end with underscore, eg., \verb|member_variable_name_|
+\end{itemize}
+
+\subsection{Header guards}
+
+The style for header guard is to be in uppercase and end with underscore. The \texttt{\#endif} also has the name of the file guard as inline comment. Example of header guard in \verb|foo_bar_baz.h|:
+\begin{verbatim}
+#ifndef FOO_BAR_BAZ_H_
+#define FOO_BAR_BAZ_H_
+code...
+#endif // FOO_BAR_BAZ_H_
+\end{verbatim}
+
+\subsection{The order of includes}
+\begin{enumerate}
+	\setlength\itemsep{0em}
+	\item Related header
+	\item C system headers
+	\item C++ standard library headers
+	\item Other libraries headers
+	\item Your project headers
+\end{enumerate}
+
+Example of include order in \texttt{fooserver.cpp}:
+\begin{verbatim}
+#include "foo/server/fooserver.h"
+
+#include <sys/types.h>
+#include <unistd.h>
+
+#include <string>
+#include <vector>
+
+#include "base/basictypes.h"
+#include "base/commandlineflags.h"
+#include "foo/server/bar.h"
+\end{verbatim}
+
+\subsection{Indentation}
+The common indentation in C++ is two spaces, in Python is four spaces. When using linter, the line length is limited, \eg, \texttt{cpplint}'s limit is 80 characters, \texttt{pylint}'s limit is 100 characters.
+
+\subsection{Comments}
+Comments are necessary to explain the usage of variables, functions, classes, etc. The more complex and non-obvious is the function, method, the more comments there should be. In C++, Doxygen style comments are widely used. It has @tags regarding parameters, return value, exception, etc. Python, there is \verb|docstrings| and function annotations with type hints. Doxygen style comment examples:
+
+\begin{verbatim}
+/**
+* Sum numbers in a vector.
+*
+* This sum is the arithmetic sum, not some other kind of sum that only
+* mathematicians have heard of.
+*
+* @param values Container whose values are summed.
+* @return sum of `values`, or 0.0 if `values` is empty.
+*/
+double sumInt(std::vector<double> values);
+
+/**
+* @brief Sum numbers in a vector
+* @param values Container whose values are summed.
+* @return sum of `values`, or 0.0 if `values` is empty.
+* @throw Exception something
+*/
+double sumInt(std::vector<double> values);
+\end{verbatim}
+
+Python docstrings and function annotation examples:
+
+\begin{verbatim}
+def func(abc, fds=4.6):
+    # One-line Docstrings, note the "." at the end
+    '''Do sth and return sth.'''
+    
+    # Multi-line Docstrings, Google Style (check also Sphinx, Numpy style)
+    '''Summary line.
+    
+    Args:
+        a (int): the dog
+        b (float): the duck
+    
+    Raises:
+        RuntimeError: Out of dog.
+    
+    Returns:
+        dick (float): the dick
+    '''
+    
+    pass
+
+print(func.__doc__)
+help(func)
+
+def func(abc:'int', fds:'float'=4.6) -> 'list':
+    pass
+print(func.__annotations__)
+\end{verbatim}
+
+With \ac{ROS}2, the \verb|ament_package| \cite{ament} includes programs to check for coding style in CMake, C++, Python, XML. The commands are:
+
+\begin{verbatim}
+# automatically fix them.
+ament_uncrustify --reformat
+# see the output in isolation
+ament_cpplint
+ament_cppcheck
+\end{verbatim}
+\clearpage
